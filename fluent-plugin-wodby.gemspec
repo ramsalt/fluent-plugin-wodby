@@ -23,6 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 13.0.6"
   spec.add_development_dependency "test-unit", "~> 3.5.3"
   spec.add_runtime_dependency "fluentd", [">= 0.14.10", "< 2"]
-  spec.add_runtime_dependency "rest-client"
-  spec.add_runtime_dependency "json"
+  spec.add_runtime_dependency "rest-client", "~> 2.0"
+  spec.add_runtime_dependency "json", "~> 2.0"
 end
