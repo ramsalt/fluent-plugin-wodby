@@ -28,11 +28,10 @@ module Fluent
         super
 
         @instance_map = {}
-        puts "Starting wodby"
+        log.info "Initialized wodby plugin"
       end
 
       def filter(tag, time, record)
-        puts "Wodby filter"
         record['wodby.filter'] = true
 
         if record.has_key?('kubernetes.namespace_name')
