@@ -44,6 +44,9 @@ module Fluent
           end
 
           record['wodby.instance'] = @instance_map[record['kubernetes.namespace_name']]
+        else
+          log.info "No namespace found"
+          log.info record
         end
 
         record
