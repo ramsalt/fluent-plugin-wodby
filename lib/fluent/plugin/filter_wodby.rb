@@ -34,16 +34,17 @@ module Fluent
       def filter(tag, time, record)
         record['wodby.filter'] = true
 
-        if record.has_key?('kubernetes.namespace_name')
-          unless @instance_map.has_key?(record['kubernetes.namespace_name'])
-            record['wodby.instance_query'] = record['kubernetes.namespace_name']
-            instance = get_instance(record['kubernetes.namespace_name'])
+        if record.has_key?('kubernetes') && record['kubernetes'].has_key?('namespace_name')
+          namespace = record['kubernetes']['namespace_name']
+          unless @instance_map.has_key?(namespace)
+            record['wodby.instance_query'] = namespace
+            instance = get_instance(namespace)
             app = get_app(instance['app_id'])
 
-            @instance_map[record['kubernetes.namespace_name']] = "#{app['title']}-#{instance['name']}"
+            @instance_map[namespace] = "#{app['title']}-#{instance['name']}"
           end
 
-          record['wodby.instance'] = @instance_map[record['kubernetes.namespace_name']]
+          record['wodby.instance'] = @instance_map[namespace]
         else
           log.info "No namespace found"
           log.info record
