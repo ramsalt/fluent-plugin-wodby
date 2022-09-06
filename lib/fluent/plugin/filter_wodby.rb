@@ -24,12 +24,25 @@ module Fluent
 
       config_param :api_key, :string, secret: true
 
-      def filter(tag, time, record)
-        if record.has_key?('kubernetes.namespace_name')
-          instance = get_instance(record['kubernetes.namespace_name'])
-          app = get_app(instance['app_id'])
+      def start
+        super
 
-          record['wodby.instance'] = "#{app['title']}-#{instance['name']}"
+        @instance_map = {}
+      end
+
+      def filter(tag, time, record)
+        record['wodby.filter'] = true
+
+        if record.has_key?('kubernetes.namespace_name')
+          unless @instance_map.has_key?(record['kubernetes.namespace_name'])
+            record['wodby.instance_query'] = record['kubernetes.namespace_name']
+            instance = get_instance(record['kubernetes.namespace_name'])
+            app = get_app(instance['app_id'])
+
+            @instance_map[record['kubernetes.namespace_name']] = "#{app['title']}-#{instance['name']}"
+          end
+
+          record['wodby.instance'] = @instance_map[record['kubernetes.namespace_name']]
         end
 
         record
@@ -44,7 +57,7 @@ module Fluent
             headers={'X-API-KEY': @api_key}
           )
           instance = JSON.parse(response)
-        rescue RestClient::ExceptionWithResponse => e
+        rescue RestClient::ExceptionWithResponse
           instance = {}
         end
 
@@ -58,7 +71,7 @@ module Fluent
             headers={'X-API-KEY': @api_key}
           )
           app = JSON.parse(response)
-        rescue RestClient::ExceptionWithResponse => e
+        rescue RestClient::ExceptionWithResponse
           app = {}
         end
 

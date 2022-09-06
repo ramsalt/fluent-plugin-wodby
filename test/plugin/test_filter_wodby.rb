@@ -18,10 +18,16 @@ class WodbyFilterTest < Test::Unit::TestCase
     d.run do
       d.feed('filter.test', time, { 'kubernetes.namespace_name' => '650241f4-7303-4668-91c7-b8cd1821d81a', 'message' => 'hullo' })
       d.feed('filter.test', time, { 'kubernetes.namespace_name' => 'a3d67f12-8341-4245-87db-ed7a6c856e70', 'message' => 'hullo' })
+      d.feed('filter.test', time, { 'kubernetes.namespace_name' => '650241f4-7303-4668-91c7-b8cd1821d81a', 'message' => 'hullo' })
     end
 
-    assert_equal(2, d.filtered_records.size)
+    assert_equal(3, d.filtered_records.size)
     assert_equal('dfo.no-staging', d.filtered_records[0]['wodby.instance'])
     assert_equal('dfo.no-prod', d.filtered_records[1]['wodby.instance'])
+    assert_equal('dfo.no-staging', d.filtered_records[2]['wodby.instance'])
+    assert_nil(d.filtered_records[2]['wodby.instance_query'])
+    assert_true(d.filtered_records[0]['wodby.filter'])
+    assert_true(d.filtered_records[1]['wodby.filter'])
+    assert_true(d.filtered_records[2]['wodby.filter'])
   end
 end
