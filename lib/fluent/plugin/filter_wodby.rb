@@ -41,10 +41,14 @@ module Fluent
             instance = get_instance(namespace)
             app = get_app(instance['app_id'])
 
-            @instance_map[namespace] = "#{app['title']}-#{instance['name']}"
+            @instance_map[namespace] = {
+              'name' => "#{app['name']}.#{instance['name']}",
+              'title' => "#{app['title']} - #{instance['title']}",
+            }
           end
 
-          record['wodby.instance'] = @instance_map[namespace]
+          record['wodby.instance'] = @instance_map[namespace]['name']
+          record['wodby.instance_title'] = @instance_map[namespace]['title']
         else
           log.info "No namespace found"
           log.info record
