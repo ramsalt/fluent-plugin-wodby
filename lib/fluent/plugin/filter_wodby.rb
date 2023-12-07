@@ -55,7 +55,7 @@ module Fluent
           record['wodby.instance_title'] = @instance_map[namespace]['title']
           record['wodby.instance_type'] = @instance_map[namespace]['type']
           record['wodby.organization'] = @instance_map[namespace]['organization']
-          record['wodby.organization_name'] = @instance_map[namespace]['organization_name']
+          record['wodby.organization_title'] = @instance_map[namespace]['organization_title']
         else
           log.info "No namespace found"
           log.info record
