@@ -40,15 +40,22 @@ module Fluent
             record['wodby.instance_query'] = namespace
             instance = get_instance(namespace)
             app = get_app(instance['app_id'])
+            org = get_org(app['org_id'])
 
             @instance_map[namespace] = {
               'name' => "#{app['name']}.#{instance['name']}",
               'title' => "#{app['title']} - #{instance['title']}",
+              'type' => instance['type'],
+              'organization' => org['title'],
+              'organization_name' => org['name'],
             }
           end
 
           record['wodby.instance'] = @instance_map[namespace]['name']
           record['wodby.instance_title'] = @instance_map[namespace]['title']
+          record['wodby.instance_type'] = @instance_map[namespace]['type']
+          record['wodby.organization'] = @instance_map[namespace]['organization']
+          record['wodby.organization_name'] = @instance_map[namespace]['organization_name']
         else
           log.info "No namespace found"
           log.info record
@@ -85,6 +92,20 @@ module Fluent
         end
 
         app
+      end
+
+      def get_org(org_id)
+        begin
+          response = RestClient.get(
+            "https://api.wodby.com/api/v3/orgs/#{org_id}",
+            headers={'X-API-KEY': @api_key}
+          )
+          org = JSON.parse(response)
+        rescue RestClient::ExceptionWithResponse
+          org = {}
+        end
+
+        org
       end
     end
   end
