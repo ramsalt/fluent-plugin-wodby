@@ -46,8 +46,8 @@ module Fluent
               'name' => "#{app['name']}.#{instance['name']}",
               'title' => "#{app['title']} - #{instance['title']}",
               'type' => instance['type'],
-              'organization' => org['title'],
-              'organization_name' => org['name'],
+              'organization' => org['name'],
+              'organization_title' => org['title'],
             }
           end
 
