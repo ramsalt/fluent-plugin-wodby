@@ -32,7 +32,9 @@ module Fluent
       end
 
       def filter(tag, time, record)
-        record['wodby']['filter'] = true
+        record['wodby'] = {
+          'filter' => true
+        }
 
         if record.has_key?('kubernetes') && record['kubernetes'].has_key?('namespace_name')
           namespace = record['kubernetes']['namespace_name']

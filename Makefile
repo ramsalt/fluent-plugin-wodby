@@ -2,8 +2,8 @@ PWD=$(shell pwd)
 
 .PHONY: docker-test
 docker-test:
-	docker run --rm -it -v $(PWD):/build -e WODBY_API_KEY=${WODBY_API_KEY} ruby:3.2 /bin/bash -c "cd build && bundle install && bundle exec rake test"
+	docker run --rm -it -v $(PWD):/build -e WODBY_API_KEY=${WODBY_API_KEY} ruby:3.3 /bin/bash -c "cd build && bundle install && bundle exec rake test"
 
 .PHONY: docker-tester
 docker-tester:
-	docker run --rm -it -v $(PWD):/build -e WODBY_API_KEY=${WODBY_API_KEY} ruby:3.2 /bin/bash
+	docker run --rm -it -v $(PWD):/build -e WODBY_API_KEY=${WODBY_API_KEY} ruby:3.3 /bin/bash
