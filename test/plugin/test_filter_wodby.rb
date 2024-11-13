@@ -17,7 +17,7 @@ class WodbyFilterTest < Test::Unit::TestCase
     time = event_time
     d.run do
       d.feed('filter.test', time, { 'kubernetes' => {'namespace_name' => '650241f4-7303-4668-91c7-b8cd1821d81a'}, 'message' => 'hullo' })
-      d.feed('filter.test', time, { 'kubernetes' => {'namespace_name' => 'a3d67f12-8341-4245-87db-ed7a6c856e70'}, 'message' => 'hullo' })
+      d.feed('filter.test', time, { 'kubernetes' => {'namespace_name' => '7ee5d15f-7c3c-4ce8-873e-34b75154f0f4'}, 'message' => 'hullo' })
       d.feed('filter.test', time, { 'kubernetes' => {'namespace_name' => '650241f4-7303-4668-91c7-b8cd1821d81a'}, 'message' => 'hullo' })
     end
 
