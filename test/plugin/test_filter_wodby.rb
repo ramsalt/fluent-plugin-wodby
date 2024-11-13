@@ -22,14 +22,14 @@ class WodbyFilterTest < Test::Unit::TestCase
     end
 
     assert_equal(3, d.filtered_records.size)
-    assert_equal('dfono.staging', d.filtered_records[0]['wodby.instance'])
-    assert_equal('dfono.prod', d.filtered_records[1]['wodby.instance'])
-    assert_equal('dfono.staging', d.filtered_records[2]['wodby.instance'])
-    assert_equal('dfo.no - Staging', d.filtered_records[0]['wodby.instance_title'])
-    assert_equal('dfo.no - Prod', d.filtered_records[1]['wodby.instance_title'])
-    assert_nil(d.filtered_records[2]['wodby.instance_query'])
-    assert_true(d.filtered_records[0]['wodby.filter'])
-    assert_true(d.filtered_records[1]['wodby.filter'])
-    assert_true(d.filtered_records[2]['wodby.filter'])
+    assert_equal('dfono.staging', d.filtered_records[0]['wodby']['instance'])
+    assert_equal('dfono.prod', d.filtered_records[1]['wodby']['instance'])
+    assert_equal('dfono.staging', d.filtered_records[2]['wodby']['instance'])
+    assert_equal('dfo.no - Staging', d.filtered_records[0]['wodby']['instance_title'])
+    assert_equal('dfo.no - Prod', d.filtered_records[1]['wodby']['instance_title'])
+    assert_nil(d.filtered_records[2]['wodby']['instance_query'])
+    assert_true(d.filtered_records[0]['wodby']['filter'])
+    assert_true(d.filtered_records[1]['wodby']['filter'])
+    assert_true(d.filtered_records[2]['wodby']['filter'])
   end
 end

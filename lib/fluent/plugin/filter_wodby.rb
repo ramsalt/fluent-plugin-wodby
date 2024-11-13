@@ -1,5 +1,5 @@
 #
-# Copyright 2022- TODO: Write your name
+# Copyright 2022-2024: Ramsalt Lab
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,12 +32,12 @@ module Fluent
       end
 
       def filter(tag, time, record)
-        record['wodby.filter'] = true
+        record['wodby']['filter'] = true
 
         if record.has_key?('kubernetes') && record['kubernetes'].has_key?('namespace_name')
           namespace = record['kubernetes']['namespace_name']
           unless @instance_map.has_key?(namespace)
-            record['wodby.instance_query'] = namespace
+            record['wodby']['instance_query'] = namespace
             instance = get_instance(namespace)
             app = get_app(instance['app_id'])
             org = get_org(app['org_id'])
@@ -51,11 +51,11 @@ module Fluent
             }
           end
 
-          record['wodby.instance'] = @instance_map[namespace]['name']
-          record['wodby.instance_title'] = @instance_map[namespace]['title']
-          record['wodby.instance_type'] = @instance_map[namespace]['type']
-          record['wodby.organization'] = @instance_map[namespace]['organization']
-          record['wodby.organization_title'] = @instance_map[namespace]['organization_title']
+          record['wodby']['instance'] = @instance_map[namespace]['name']
+          record['wodby']['instance_title'] = @instance_map[namespace]['title']
+          record['wodby']['instance_type'] = @instance_map[namespace]['type']
+          record['wodby']['organization'] = @instance_map[namespace]['organization']
+          record['wodby']['organization_title'] = @instance_map[namespace]['organization_title']
         else
           log.info "No namespace found"
           log.info record
