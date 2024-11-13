@@ -1,8 +1,9 @@
 # fluent-plugin-wodby
 
-[Fluentd](https://fluentd.org/) filter plugin to do something.
+[Fluentd](https://fluentd.org/) filter plugin to enrich logging data with Wodby instance information.
 
-TODO: write description for you plugin.
+This plugin will query the [Wodby](https://wodby.com) API to retrieve information about the
+Wodby instance producing the logs.
 
 ## Installation
 
@@ -38,6 +39,6 @@ You can copy and paste generated documents here.
 
 ## Copyright
 
-* Copyright(c) 2022- TODO: Write your name
+* Copyright(c) 2022-2024: Ramsalt Lab
 * License
   * Apache License, Version 2.0
