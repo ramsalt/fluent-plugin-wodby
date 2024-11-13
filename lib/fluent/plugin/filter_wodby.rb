@@ -36,6 +36,11 @@ module Fluent
           'filter' => true
         }
 
+        if record.has_key?('wodby.node_name')
+          record['wodby']['node_name'] = record['wodby.node_name']
+          record.delete('wodby.node_name')
+        end
+
         if record.has_key?('kubernetes') && record['kubernetes'].has_key?('namespace_name')
           namespace = record['kubernetes']['namespace_name']
           unless @instance_map.has_key?(namespace)
