@@ -46,23 +46,28 @@ module Fluent
           unless @instance_map.has_key?(namespace)
             record['wodby']['instance_query'] = namespace
             instance = get_instance(namespace)
-            app = get_app(instance['app_id'])
-            org = get_org(app['org_id'])
 
-            @instance_map[namespace] = {
-              'name' => "#{app['name']}.#{instance['name']}",
-              'title' => "#{app['title']} - #{instance['title']}",
-              'type' => instance['type'],
-              'organization' => org['name'],
-              'organization_title' => org['title'],
-            }
+            if instance.empty?
+              @instance_map[namespace] = {
+                'found' => false
+              }
+
+            else
+              app = get_app(instance['app_id'])
+              org = get_org(app['org_id'])
+
+              @instance_map[namespace] = {
+                'found' => true,
+                'instance' => "#{app['name']}.#{instance['name']}",
+                'instance_title' => "#{app['title']} - #{instance['title']}",
+                'instance_type' => instance['type'],
+                'organization' => org['name'],
+                'organization_title' => org['title'],
+              }
+            end
           end
 
-          record['wodby']['instance'] = @instance_map[namespace]['name']
-          record['wodby']['instance_title'] = @instance_map[namespace]['title']
-          record['wodby']['instance_type'] = @instance_map[namespace]['type']
-          record['wodby']['organization'] = @instance_map[namespace]['organization']
-          record['wodby']['organization_title'] = @instance_map[namespace]['organization_title']
+          record['wodby'].merge!(@instance_map[namespace])
         else
           log.info "No namespace found"
           log.info record
